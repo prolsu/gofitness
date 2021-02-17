@@ -3,22 +3,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const WorkoutSchema = new Schema({
-    name: {
-        type: String,
-        unique: false
+    day: {
+        type: Date,
+        default: Date.now()
     },
-    cardio: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Cardio"
-        }
-    ],
-    resistance: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Resistance"
-        }
-    ]
+    exercises: Array
 });
 
 const Workout = mongoose.model("Workout", WorkoutSchema);
