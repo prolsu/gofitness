@@ -4,7 +4,11 @@ const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 8080;
 
-// const db = require("./models");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "Connection error:"));
+db.once("open", () => console.log("Connection success"));
 
 const app = express();
 
@@ -15,10 +19,8 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
-
 require("./routes/api-routes.js")(app);
-// require("./routes/html-routes.js")(app);
+require("./routes/html-routes.js")(app);
 
 app.listen(PORT, () => {
     console.log(`App listening on: http://localhost:${PORT} !`);

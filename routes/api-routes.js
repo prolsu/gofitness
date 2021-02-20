@@ -1,6 +1,16 @@
 const db = require("../models");
 
 module.exports = function (app) {
+    // app.get("/exercise", (req, res) => {
+    db.Workout.create({ name: "GoFitness: fitness+" })
+        .then(dbWorkout => {
+            console.log(dbWorkout);
+        })
+        .catch(({ message }) => {
+            console.log(message);
+        });
+    // });
+
     app.post("/api/cardio", ({ body }, res) => {
         db.Cardio.create(body)
             .then(dbWorkout => {
@@ -43,7 +53,7 @@ module.exports = function (app) {
             });
     });
 
-    app.post("/api/workouts", ({body}, res) => {
+    app.post("/api/workouts", ({ body }, res) => {
         db.Workout.insertMany(body)
             .then(dbWorkout => {
                 res.json(dbWorkout);
@@ -84,16 +94,6 @@ module.exports = function (app) {
     //         });
     // });
 
-    // app.get("/exercise", (req, res) => {
-        // db.Workout.create({ name: "GoFitness: fitness+" })
-        //     .then(dbWorkout => {
-        //         console.log(dbWorkout);
-        //     })
-        //     .catch(({ message }) => {
-        //         console.log(message);
-        //     });
-    // });
-
     // app.get("/workouts", (req, res) => {
     //     db.Workout.find({})
     //         .populate("cardio")
@@ -105,5 +105,4 @@ module.exports = function (app) {
     //             res.json(err);
     //         })
     // });
-
 };
